@@ -1,0 +1,56 @@
+J/A+AS/122/285      VCS Stark broadening tables for hydrogen (Lemke, 1997)
+================================================================================
+Extendend VCS Stark broadening tables for hydrogen-Lyman to Brackett series
+     Lemke M.
+    <Astron. Astrophys. Suppl. Ser. 122, 285 (1997)>
+    =1997A&AS..122..285L      (SIMBAD/NED BibCode)
+================================================================================
+ADC_Keywords: Atomic physics
+Keywords: atomic data - line: profiles
+
+Description:
+    Stark profiles computed with the VCS theory are presented here for the
+    Lyman, Balmer, Paschen, and Brackett series of hydrogen. They
+    cover the series up to n=22 and a wide range of temperature and
+    electron density. Both Doppler broadened profiles (as applicable to
+    stellar atmospheres) and unbroadened profiles are given.
+
+File Summary:
+--------------------------------------------------------------------------------
+ FileName    Lrecl    Records   Explanations
+--------------------------------------------------------------------------------
+ReadMe          80          .   This file
+balmer          80      11596   Balmer series Doppler broadened Stark profiles
+balmernd        80      16041   Balmer series unbroadened Stark profiles
+brack           80       9565   Brackett series Doppler broadened Stark profiles
+bracknd         80      11475   Brackett series unbroadened Stark profiles
+lyman           80      12909   Lyman series Doppler broadened Stark profiles
+lymannd         80      16521   Lyman series unbroadened Stark profiles
+pasch           80      10521   Paschen series Doppler broadened Stark profiles
+paschnd         80      12705   Paschen series unbroadened Stark profiles
+prog.f          80        110  *Fortran program
+size            19         78   log Delta Alpha Min for all lines in the Doppler
+                                 broadened tables (all series)
+--------------------------------------------------------------------------------
+Note to prog.f: Fortran program for reading the tables, similar to Table 2
+  of the paper
+--------------------------------------------------------------------------------
+
+See also:
+    VI/82 : Stark broadening of H lines (Stehle 1995)
+
+Byte-by-byte Description of file: size
+--------------------------------------------------------------------------------
+   Bytes Format Units   Label       Explanations
+--------------------------------------------------------------------------------
+   1-  2  A2    ---     Serie       Name of the serie (1)
+       4  I1    ---     lq          Lower quantum number
+   6-  7  I2    ---     uq          Upper quantum number
+  10- 17  F8.5  --- log(DalphaMin)  Detuning from minimum central wavelength
+--------------------------------------------------------------------------------
+Note (1): Ly: Lyman, Ba: Balmer, Pa: Paschen, Br: Brackett
+--------------------------------------------------------------------------------
+
+Acknowledgements: Michael Lemke <ai26@a400.sternwarte.uni-erlangen.de>
+================================================================================
+(End)                                         Patricia Bauer [CDS]   05-Aug-1996
