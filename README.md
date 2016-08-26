@@ -31,7 +31,7 @@ v_macro = 5
 v_inst = 5
 
 # make the line profile
-velocity, line_profile = make_hydrogen_line_profile(nlo, nup, temp, nelec, v_inst, v_macro)
+velocity, line_profile = make_hydrogen_line_profile(nlo, nhi, temp, nelec, v_inst, v_macro)
 
 # save it
 np.savetxt('lprof.txt', np.column_stack((velocity, line_profile)))
@@ -40,5 +40,3 @@ np.savetxt('lprof.txt', np.column_stack((velocity, line_profile)))
 plt.plot(velocity, line_profile)
 plt.show()
 ```
-
-

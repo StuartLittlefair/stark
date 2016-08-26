@@ -11,7 +11,8 @@ from .interpolation import interpolate_profile
 from .utils import get_central_wavelength
 
 
-def make_hydrogen_line_profile(nlower, nupper, temp, nelec, v_inst, v_macro):
+def make_hydrogen_line_profile(nlower, nupper, temp, nelec, v_inst, v_macro,
+                               thermal_broadening=False):
     """
     Make a synthetic, Stark broadened line profile for Hydrogen
 
@@ -29,6 +30,11 @@ def make_hydrogen_line_profile(nlower, nupper, temp, nelec, v_inst, v_macro):
         instrumental line broadening (km/s)
     v_macro : float
         local broadening of line profile due to macroturbulence (km/s)
+    thermal_broadening : bool, default False
+        include thermal broadening at specified temperature, as implemented
+        by Lemke 1997. There seems to be something up with this. For T=2500K
+        I would expect around 5 km/s of broadening, whereas it looks closer
+        to 20 km/s. Use with caution.
 
     Returns
     -------
@@ -41,7 +47,8 @@ def make_hydrogen_line_profile(nlower, nupper, temp, nelec, v_inst, v_macro):
     central_wavelength = get_central_wavelength(nlower, nupper)
     wave = central_wavelength + np.linspace(-100, 100, 10000)
 
-    log_alpha, stark_profile, f0 = interpolate_profile(nlower, nupper, nelec, temp)
+    log_alpha, stark_profile, f0 = interpolate_profile(nlower, nupper, nelec, temp,
+                                                       with_doppler=thermal_broadening)
     actual_log_alpha_values = np.log10(np.fabs((wave-central_wavelength)/f0))
 
     # Stark broadened line profile
