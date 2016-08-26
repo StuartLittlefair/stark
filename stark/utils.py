@@ -24,7 +24,7 @@ def get_central_wavelength(nlower, nupper):
     """
     data_dir = pkg_resources.resource_filename('stark', 'data')
     path = os.path.join(data_dir, 'H_linelist.dat')
-    wave, nlo, nup, *rest = np.loadtxt(path).T
+    wave, nlo, nup, _, _, _ = np.loadtxt(path).T
     mask = (nlo == nlower) & (nup == nupper)
     if mask.sum() != 1:
         raise ValueError("Could not find a unique match to these energy levels")

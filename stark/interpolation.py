@@ -2,8 +2,6 @@ from __future__ import (print_function, absolute_import)
 
 import numpy as np
 
-from astropy import units as u
-
 from .profiles import get_profiles
 
 
