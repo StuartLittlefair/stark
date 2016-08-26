@@ -1,6 +1,13 @@
 # stark
 Stark broadened line profiles for Hydrogen, using the tables of Lemke 1997
 
+## installation
+```
+git clone https://github.com/StuartLittlefair/stark
+cd stark
+pip install .
+```
+
 ## usage
 
 ```python
