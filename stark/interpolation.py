@@ -30,7 +30,7 @@ def interpolate_profile(nlower, nupper, nelec, temp, with_doppler=False):
         conversion between delta-alpha and delta-lambda
     """
     meta, flags, data = get_profiles(nlower, nupper, with_doppler)
-    f0 = 1.25e-9*nelec**(2./3.)
+    f0 = 1.25e-9*nelec**(2./3.)  # normal field strength f0 (in esu)
     log_ne = np.log10(nelec)
     log_t = np.log10(temp)
     log_ne_index = (log_ne - meta.log_ne_min) / meta.log_ne_increment

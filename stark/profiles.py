@@ -53,7 +53,6 @@ def get_profiles(nlower=2, nupper=3, with_doppler=False):
             # make sure we're still in the right place in the file
             check_line_info(line_info, meta)
             data = read_n_items(data_size, fh)
-
             # now if this is the right transition, reshape and return
             if meta.nlower == nlower and meta.nupper == nupper:
                 break

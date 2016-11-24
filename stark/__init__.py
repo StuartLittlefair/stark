@@ -12,6 +12,7 @@ from .utils import get_central_wavelength
 
 
 def make_hydrogen_line_profile(nlower, nupper, temp, nelec, v_inst, v_macro,
+                               additional_broadening=True,
                                thermal_broadening=False):
     """
     Make a synthetic, Stark broadened line profile for Hydrogen
@@ -30,6 +31,8 @@ def make_hydrogen_line_profile(nlower, nupper, temp, nelec, v_inst, v_macro,
         instrumental line broadening (km/s)
     v_macro : float
         local broadening of line profile due to macroturbulence (km/s)
+    additional_broadening : bool, default True
+        apply instrumental and macroturbulence broadening
     thermal_broadening : bool, default False
         include thermal broadening at specified temperature, as implemented
         by Lemke 1997. There seems to be something up with this. For T=2500K
@@ -46,22 +49,25 @@ def make_hydrogen_line_profile(nlower, nupper, temp, nelec, v_inst, v_macro,
 
     central_wavelength = get_central_wavelength(nlower, nupper)
     wave = central_wavelength + np.linspace(-100, 100, 10000)
-
+    velocity = (wave - central_wavelength) * 3.e5 / central_wavelength
     log_alpha, stark_profile, f0 = interpolate_profile(nlower, nupper, nelec, temp,
                                                        with_doppler=thermal_broadening)
     actual_log_alpha_values = np.log10(np.fabs((wave-central_wavelength)/f0))
 
     # Stark broadened line profile
-    line_profile = np.interp(actual_log_alpha_values, log_alpha, stark_profile)
+    line_profile = 10**np.interp(actual_log_alpha_values, log_alpha, stark_profile)
 
     # now convolve with local and instrumental Gaussian profile
-    v_total = np.sqrt(v_inst**2 + v_macro**2)
-    velocity = (wave - central_wavelength) * 3.e5 / central_wavelength
-    kernel_width_fwhm = v_total / np.diff(velocity).mean()
-    kernel_width_sigma = kernel_width_fwhm * gaussian_fwhm_to_sigma
-    kernel = Gaussian1DKernel(kernel_width_sigma)
+    if additional_broadening:
+        v_total = np.sqrt(v_inst**2 + v_macro**2)
 
-    line_profile_convolved = convolve(line_profile, kernel, boundary='extend')
+        kernel_width_fwhm = v_total / np.diff(velocity).mean()
+        kernel_width_sigma = kernel_width_fwhm * gaussian_fwhm_to_sigma
+        kernel = Gaussian1DKernel(kernel_width_sigma)
+
+        line_profile_convolved = convolve(line_profile, kernel, boundary='extend')
+    else:
+        line_profile_convolved = line_profile
 
     # normalise
     line_profile_convolved /= np.fabs(line_profile_convolved.sum())
